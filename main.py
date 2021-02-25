@@ -95,7 +95,7 @@ def salva_soluzione(file_path):
 
 
 if __name__ == "__main__":
-    arr = ['a.txt', 'b.txt', 'c.txt', 'd.txt', 'e.txt', 'f.txt']
+    arr = ['f.txt']
 
     for file in arr:
         print("elaboro " + file + "\n")
