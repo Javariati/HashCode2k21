@@ -79,10 +79,17 @@ def calcola_tutto(path):
             right_intersections.append(intersection)
 
 
-    print(len(right_intersections))
+    #print(len(right_intersections))
 
-    for intersection in right_intersections:
-        print(intersection)
+    #for intersection in right_intersections:
+    #    print(intersection)
+
+
+    sorted_streets = sorted(total_streets, reverse=True, key=Street.driving_through)
+
+    for street in sorted_streets:
+        print(street)
+
 
 
 def salva_soluzione(file_path):
@@ -95,8 +102,10 @@ def salva_soluzione(file_path):
 
 
 if __name__ == "__main__":
-    arr = ['f.txt']
+    #arr = ['a.txt', 'b.txt', 'c.txt', 'd.txt', 'e.txt', 'f.txt']
+    #arr = ['d.txt']
+    #for file in arr:
+    #    print("elaboro " + file + "\n")
+    #    salva_soluzione(file)
 
-    for file in arr:
-        print("elaboro " + file + "\n")
-        salva_soluzione(file)
+    calcola_tutto('inputs/d.txt')

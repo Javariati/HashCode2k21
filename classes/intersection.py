@@ -46,9 +46,11 @@ class Intersection:
 
         for idx, s in enumerate(self.streets_to_schedule):
             if idx < len(self.streets_to_schedule) - 1:
-                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime)}\n'
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime*2)}\n'
+                #schedule += f'{s.name} {1}\n'
             else:
-                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime)}'
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime*2)}'
+                #schedule += f'{s.name} {1}'
 
         return schedule
 
