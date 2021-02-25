@@ -71,17 +71,26 @@ def calcola_tutto(path):
         intersection.set_total_cars_passing_through()
         intersection.set_num_incoming_streets_to_schedule()
 
-    intersections = sorted(intersections, reverse=True, key=Intersection.total_cars)
+    # intersections = sorted(intersections, reverse=True, key=Intersection.total_cars)
 
-    print(intersections[1])
+    print(len(intersections))
+
+    for intersection in intersections:
+        print(intersection)
+
+
+def salva_soluzione(file_path):
+    original_stdout = sys.stdout  # Save a reference to the original standard output
+
+    with open('solutions/' + file_path, 'w') as f:
+        sys.stdout = f  # Change the standard output to the file we created.
+        calcola_tutto('inputs/' + file_path)
+        sys.stdout = original_stdout  # Reset the standard output to its original value
 
 
 if __name__ == "__main__":
-    calcola_tutto('inputs/b.txt')
+    arr = ['a.txt', 'b.txt', 'c.txt', 'd.txt', 'e.txt', 'f.txt']
 
-    original_stdout = sys.stdout  # Save a reference to the original standard output
-
-    with open('solutions/b.txt', 'w') as f:
-        sys.stdout = f  # Change the standard output to the file we created.
-        print('This message will be written to a file.')
-        sys.stdout = original_stdout  # Reset the standard output to its original value
+    for file in arr:
+        print("elaboro " + file + "\n")
+        salva_soluzione(file)

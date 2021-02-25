@@ -30,8 +30,18 @@ class Intersection:
     def get_schedule(self):
         schedule = f'{self.id}\n'
         schedule += f'{self.num_streets_to_schedule}\n'
+
+        multiplicator = 0
         for s in self.streets_to_schedule:
-            schedule += f'{s.name} {s.driving_through / self.total_cars}\n'
+            curTime = 1 / (s.driving_through / self.total_cars)
+            if multiplicator < curTime:
+                multiplicator = curTime
+
+        for idx, s in enumerate(self.streets_to_schedule):
+            if idx < len(self.streets_to_schedule) - 1:
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars * multiplicator)}\n'
+            else:
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars * multiplicator)}'
 
         return schedule
 
