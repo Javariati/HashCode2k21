@@ -72,10 +72,16 @@ def calcola_tutto(path):
         intersection.set_num_incoming_streets_to_schedule()
 
     # intersections = sorted(intersections, reverse=True, key=Intersection.total_cars)
-
-    print(len(intersections))
+    right_intersections = []
 
     for intersection in intersections:
+        if intersection.total_cars > 0:
+            right_intersections.append(intersection)
+
+
+    print(len(right_intersections))
+
+    for intersection in right_intersections:
         print(intersection)
 
 
