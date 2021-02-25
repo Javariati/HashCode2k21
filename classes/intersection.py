@@ -31,17 +31,24 @@ class Intersection:
         schedule = f'{self.id}\n'
         schedule += f'{self.num_streets_to_schedule}\n'
 
-        multiplicator = 0
+        #multiplicator = 0
+        #for s in self.streets_to_schedule:
+        #    curTime = 1 / (s.driving_through / self.total_cars)
+        #    if multiplicator < curTime:
+        #        multiplicator = curTime
+
+        minTime = 1
+
         for s in self.streets_to_schedule:
-            curTime = 1 / (s.driving_through / self.total_cars)
-            if multiplicator < curTime:
-                multiplicator = curTime
+                time = s.driving_through / self.total_cars
+                if time < minTime:
+                    minTime = time
 
         for idx, s in enumerate(self.streets_to_schedule):
             if idx < len(self.streets_to_schedule) - 1:
-                schedule += f'{s.name} {int(s.driving_through / self.total_cars * multiplicator) + 1}\n'
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime)}\n'
             else:
-                schedule += f'{s.name} {int(s.driving_through / self.total_cars * multiplicator) + 1}'
+                schedule += f'{s.name} {int(s.driving_through / self.total_cars / minTime)}'
 
         return schedule
 
