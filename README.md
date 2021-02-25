@@ -5,7 +5,7 @@ Javariati HashCode Team
 Python to be fasty fast
 
 # 5 REASONS WHY: Mateo is the best
--[] He loves beets
--[] He plants apples
--[] His chicks are yellow
--[] Hates Rossini
+- [ ] He loves beets
+- [ ] He plants apples
+- [ ] His chicks are yellow
+- [x] Hates Rossini

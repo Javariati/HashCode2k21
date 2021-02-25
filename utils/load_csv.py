@@ -1,7 +1,7 @@
 import csv
 
 
-def import_csv(filename, delimiter=','):
+def import_csv(filename, delimiter=' '):
     data = []
 
     with open(filename) as csv_file:
@@ -16,8 +16,8 @@ def import_csv(filename, delimiter=','):
         for row in csv_reader:
             if count_row == 0:
                 first_line = row
-                street_number = row[2]
-            elif count_row < street_number:
+                street_number = int(row[2])
+            elif count_row <= street_number:
                 streets.append(row)
             else:
                 paths.append(row)
@@ -25,5 +25,3 @@ def import_csv(filename, delimiter=','):
             count_row += 1
 
     return first_line, streets, paths
-
-
