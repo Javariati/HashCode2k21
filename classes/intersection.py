@@ -1,27 +1,42 @@
 class Intersection:
-    def __init__(self, position, streets):
+
+    def __init__(self, position, streets=[]):
         self.id = position
         self.streets = streets
-        self.total_cars = self.get_total_cars_passing_through()
-        self.streets_to_schedule, self.num_streets_to_schedule = self.get_num_incoming_streets_to_schedule()
+        self.total_cars = 0
+        self.streets_to_schedule, self.num_streets_to_schedule = [], 0
 
-    def get_num_incoming_streets_to_schedule(self):
+    def total_cars(self):
+        return self.total_cars
+
+    def set_num_incoming_streets_to_schedule(self):
         num = 0
         streets_to_schedule = []
         for street in self.streets:
-            if street.driving_through() > 0:
+            if street.driving_through > 0:
                 num += 1
-                streets_to_schedule.append(street.name)
+                streets_to_schedule.append(street)
 
-        return streets_to_schedule, num
+        self.streets_to_schedule = streets_to_schedule
+        self.num_streets_to_schedule = num
 
-    def get_total_cars_passing_through(self):
+    def set_total_cars_passing_through(self):
         total = 0
         for street in self.streets:
-            total += self.get_total_cars_passing_through()
+            total += street.driving_through
+
+        self.total_cars = total
 
     def get_schedule(self):
         schedule = f'{self.id}\n'
         schedule += f'{self.num_streets_to_schedule}\n'
         for s in self.streets_to_schedule:
-            schedule += f'{s.name} {s.driving_through()/self.total_cars}'
+            schedule += f'{s.name} {s.driving_through / self.total_cars}\n'
+
+        return schedule
+
+    def add_street(self, street):
+        self.streets.append(street)
+
+    def __repr__(self):
+        return self.get_schedule()

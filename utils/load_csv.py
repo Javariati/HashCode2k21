@@ -15,6 +15,7 @@ def import_csv(filename, delimiter=' '):
 
         for row in csv_reader:
             if count_row == 0:
+                print("Jack bravo")
                 first_line = row
                 street_number = int(row[2])
             elif count_row <= street_number:

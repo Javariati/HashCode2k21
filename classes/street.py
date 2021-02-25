@@ -1,4 +1,5 @@
 class Street:
+
     def __init__(self, start, end, name, length):
         self.start = start
         self.end = end
@@ -8,6 +9,9 @@ class Street:
 
     def driving_through(self):
         return self.driving_through
+
+    def name(self):
+        return self.name
 
     def add_car_driving_through(self):
         self.driving_through += 1

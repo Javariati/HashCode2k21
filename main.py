@@ -1,7 +1,10 @@
+import sys
+
 from utils.load_csv import import_csv
 from classes.car import Car
 ##from classes.intersection import Intersection
 from classes.street import Street
+from classes.intersection import Intersection
 
 
 def find_street(name, array):
@@ -10,8 +13,25 @@ def find_street(name, array):
             return street
 
 
-if __name__ == "__main__":
-    first_line, streets, paths = import_csv('inputs/b.txt')
+def binary_search(arr, x):
+    l = 0
+    r = len(arr)
+
+    while l <= r:
+        m = l + ((r - l) // 2)
+
+        if arr[m].name < x:
+            r = m - 1
+        elif arr[m].name > x:
+            l = m + 1
+        else:
+            return arr[m]
+
+    return -1
+
+
+def calcola_tutto(path):
+    first_line, streets, paths = import_csv(path)
     first_line_raw = first_line
 
     D = first_line_raw[0]
@@ -21,15 +41,47 @@ if __name__ == "__main__":
     F = first_line_raw[4]
 
     total_streets = []
-    total_paths = []
+    total_cars = []
+    intersections = []
+    intersections_id = []
 
-    for street in streets:
+    for idx, street in enumerate(streets):
         total_streets.append(Street(street[0], street[1], street[2], street[3]))
+        intersection_id = street[1]
+        if intersections_id.count(intersection_id) > 0:
+            for int in intersections:
+                if int.id == intersection_id:
+                    int.add_street(total_streets[idx])
+                    break
+        else:
+            intersection = Intersection(intersection_id, [total_streets[idx]])
+            intersections.append(intersection)
+            intersections_id.append(intersection_id)
 
     for path in paths:
-        for val in path[1:]:
-            find_street(val, total_streets).add_car_driving_through()
+        total_cars.append(Car(path[0], path[1:]))
 
-    sorted_streets = sorted(total_streets, reverse=True, key=Street.driving_through)
+    sorted_streets = sorted(total_streets, reverse=True, key=Street.name)
 
-    print(sorted_streets)
+    for car in total_cars:
+        for street in car.streets:
+            binary_search(sorted_streets, street).add_car_driving_through()
+
+    for intersection in intersections:
+        intersection.set_total_cars_passing_through()
+        intersection.set_num_incoming_streets_to_schedule()
+
+    intersections = sorted(intersections, reverse=True, key=Intersection.total_cars)
+
+    print(intersections[1])
+
+
+if __name__ == "__main__":
+    calcola_tutto('inputs/b.txt')
+
+    original_stdout = sys.stdout  # Save a reference to the original standard output
+
+    with open('solutions/b.txt', 'w') as f:
+        sys.stdout = f  # Change the standard output to the file we created.
+        print('This message will be written to a file.')
+        sys.stdout = original_stdout  # Reset the standard output to its original value
